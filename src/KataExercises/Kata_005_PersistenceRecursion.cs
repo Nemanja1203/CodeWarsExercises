@@ -1,4 +1,4 @@
-﻿namespace KataPersistence;
+﻿namespace KataExercises;
 
 public class Kata_005_PersistenceRecursion
 {

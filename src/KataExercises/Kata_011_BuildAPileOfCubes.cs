@@ -11,7 +11,7 @@
 
 //findNb(91716553919377)-- > -1
 
-namespace KataPersistence;
+namespace KataExercises;
 
 public class Kata_011_BuildAPileOfCubes
 {

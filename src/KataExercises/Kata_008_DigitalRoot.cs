@@ -9,7 +9,7 @@
 //132189  -->  1 + 3 + 2 + 1 + 8 + 9 = 24  -->  2 + 4 = 6
 //493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
 
-namespace KataCodeWars;
+namespace KataExercises;
 
 internal class Kata_008_DigitalRoot
 {

@@ -20,7 +20,7 @@
 
 //Have fun!
 
-namespace KataPersistence;
+namespace KataExercises;
 
 public class Kata_012_PickPeaks
 {

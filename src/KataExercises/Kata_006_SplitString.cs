@@ -5,7 +5,7 @@
 //SplitString.Solution("abc"); // should return ["ab", "c_"]
 //SplitString.Solution("abcdef"); // should return ["ab", "cd", "ef"]
 
-namespace KataCodeWars;
+namespace KataExercises;
 
 public class Kata_006_SplitString
 {

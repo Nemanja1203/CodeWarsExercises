@@ -1,4 +1,4 @@
-﻿namespace KataPersistence;
+﻿namespace KataExercises;
 
 public static class Kata_005_Persistence
 {

@@ -4,7 +4,7 @@
 //Kata.PigIt("Pig latin is cool"); // igPay atinlay siay oolcay
 //Kata.PigIt("Hello world !");     // elloHay orldway !
 
-namespace KataPersistence;
+namespace KataExercises;
 
 public class Kata_010_FindTheParityOutlier
 {
