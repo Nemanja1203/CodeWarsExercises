@@ -53,7 +53,7 @@ public class Kata_006_PickPeaks_Tests
                 ["pos"] = p1.ToList(),
                 ["peaks"] = p2.ToList()
             };
-            var actual = Kata_006_PickPeaks.GetPeaks(_array[n]);
+            var actual = Kata_012_PickPeaks.GetPeaks(_array[n]);
             Assert.AreEqual(expected, actual, _msg[n]);
         }
     }
@@ -65,7 +65,7 @@ public class Kata_006_PickPeaks_Tests
         var arr = new int[] { 1, 2, 3, 4, 5 };
 
         // Act
-        var res = Kata_006_PickPeaks.GetPeaks(arr);
+        var res = Kata_012_PickPeaks.GetPeaks(arr);
 
         // Assert
         //res["pos"].Count
@@ -80,7 +80,7 @@ public class Kata_006_PickPeaks_Tests
         var arr = new int[] { 1, 2, 1 };
 
         // Act
-        var res = Kata_006_PickPeaks.GetPeaks(arr);
+        var res = Kata_012_PickPeaks.GetPeaks(arr);
 
         // Assert
         Assert.AreEqual(1, res["pos"].Count);
@@ -97,7 +97,7 @@ public class Kata_006_PickPeaks_Tests
         var arr = new int[] { 1, 2, 2, 1 };
 
         // Act
-        var res = Kata_006_PickPeaks.GetPeaks(arr);
+        var res = Kata_012_PickPeaks.GetPeaks(arr);
 
         // Assert
         Assert.AreEqual(1, res["pos"].Count);
@@ -114,7 +114,7 @@ public class Kata_006_PickPeaks_Tests
         var arr = new int[] { 1, 2, 3, 3, 3, 2, 1 };
 
         // Act
-        var res = Kata_006_PickPeaks.GetPeaks(arr);
+        var res = Kata_012_PickPeaks.GetPeaks(arr);
 
         // Assert
         Assert.AreEqual(1, res["pos"].Count);
@@ -131,7 +131,7 @@ public class Kata_006_PickPeaks_Tests
         var arr = new int[] { 1, 2, 2, 3 };
 
         // Act
-        var res = Kata_006_PickPeaks.GetPeaks(arr);
+        var res = Kata_012_PickPeaks.GetPeaks(arr);
 
         // Assert
         Assert.AreEqual(0, res["pos"].Count);
