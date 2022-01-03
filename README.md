@@ -1,1 +1,1 @@
-CodeWarsExercises
+Exercise
