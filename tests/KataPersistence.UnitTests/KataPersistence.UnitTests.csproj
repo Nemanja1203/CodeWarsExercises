@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\KataPersistence\KataPersistence.csproj" />
+    <ProjectReference Include="..\..\src\KataPersistence\KataPersistence.csproj" />
   </ItemGroup>
 
 </Project>
