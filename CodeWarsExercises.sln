@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KataPersistence.UnitTests",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KataPersistence.IntegrationTests", "KataPersistence.IntegrationTests", "{AA76B862-C7DE-472B-881B-F1DE81C2F346}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataPersistence.UnitTests", "tests\KataPersistence.UnitTests\KataPersistence.UnitTests\KataPersistence.UnitTests.csproj", "{F37AA8ED-8E0C-465C-AF22-755514E15405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KataPersistence.UnitTests", "tests\KataPersistence.UnitTests\KataPersistence.UnitTests\KataPersistence.UnitTests.csproj", "{F37AA8ED-8E0C-465C-AF22-755514E15405}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

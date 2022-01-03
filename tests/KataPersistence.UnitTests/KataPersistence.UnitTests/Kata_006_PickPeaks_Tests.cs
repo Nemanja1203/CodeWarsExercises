@@ -43,7 +43,6 @@ public class Kata_006_PickPeaks_Tests
     };
 
     [Test]
-    [Ignore("Ignore until implementation is finished")]
     public void SampleTests()
     {
         for (int n = 0; n < _msg.Length; n++)
