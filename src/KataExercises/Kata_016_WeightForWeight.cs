@@ -29,7 +29,7 @@
 
 using System.Text;
 
-namespace KataPersistence;
+namespace KataExercises;
 
 public class Kata_016_WeightForWeight
 {
