@@ -1,5 +1,4 @@
 ﻿using System;
-using KataPersistence;
 using NUnit.Framework;
 
 namespace KataExercises.UnitTests;

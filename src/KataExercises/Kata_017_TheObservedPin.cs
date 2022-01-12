@@ -34,12 +34,32 @@
 //Detective, we are counting on you!
 
 //For C# user: Do not use Mono. Mono is too slower when run your code.
+
+// Kombinacije - redosled nije bitan, podskup elemenata
+// Varijacije - redosled je bitan, podskup elemenata
+// Permutacije - redosled je bitan, svi elementi
 namespace KataExercises;
 
 public class Kata_017_TheObservedPin
 {
     public static List<string> GetPINs(string observed)
     {
+        var keypadToVariation = new Dictionary<string, List<string>>
+        {
+            { "0", new List<string> { "0", "8" } },
+            { "1", new List<string> { "1", "2", "4" } },
+            { "2", new List<string> { "2", "1", "3", "5" } },
+            { "3", new List<string> { "3", "2", "6" } },
+            { "4", new List<string> { "4", "1", "5", "7" } },
+            { "5", new List<string> { "5", "2", "4", "6", "8" } },
+            { "6", new List<string> { "6", "3", "5", "9" } },
+            { "7", new List<string> { "7", "4", "8" } },
+            { "8", new List<string> { "8", "5", "7", "9", "0" } },
+            { "9", new List<string> { "9", "6", "8" } }
+        };
+
+        // 
+
         return null;
     }
 }
