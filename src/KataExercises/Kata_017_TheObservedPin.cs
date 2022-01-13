@@ -35,15 +35,19 @@
 
 //For C# user: Do not use Mono. Mono is too slower when run your code.
 
-// Kombinacije - redosled nije bitan, podskup elemenata
-// Varijacije - redosled je bitan, podskup elemenata
-// Permutacije - redosled je bitan, svi elementi
+// Combinations - redosled nije bitan, podskup elemenata
+// Variations - redosled je bitan, podskup elemenata
+// Permutations - redosled je bitan, svi elementi
+
+// What I'm looking for is called Cartesian product
+//https://stackoverflow.com/questions/2419370/how-can-i-compute-a-cartesian-product-iteratively
 namespace KataExercises;
 
 public class Kata_017_TheObservedPin
 {
-    public static List<string> GetPINs(string observed)
+    public static List<string> GetPINs(string observedPin)
     {
+        var variations = new List<string>();
         var keypadToVariation = new Dictionary<string, List<string>>
         {
             { "0", new List<string> { "0", "8" } },
@@ -58,8 +62,23 @@ public class Kata_017_TheObservedPin
             { "9", new List<string> { "9", "6", "8" } }
         };
 
-        // 
+        var numberOfCombinations = 1;
 
-        return null;
+        foreach (var digit in observedPin)
+        {
+            numberOfCombinations *= keypadToVariation[digit.ToString()].Count;
+        }
+        
+        foreach (var digit in observedPin)
+        {
+            foreach (var variation in keypadToVariation[digit.ToString()])
+            {
+
+            }
+        }
+
+        Console.WriteLine($"Number of combinations for observed PIN: {observedPin} is {numberOfCombinations}");
+
+        return variations;
     }
 }

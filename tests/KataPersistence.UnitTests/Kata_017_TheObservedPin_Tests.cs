@@ -36,7 +36,7 @@ public class Kata_017_TheObservedPin_Tests
         var pin = "8";
 
         // Act
-        var res = Kata_017_TheObservedPin.GetPINs("8");
+        var res = Kata_017_TheObservedPin.GetPINs("369");
 
         // Assert
         CollectionAssert.AreEquivalent(pin, res);
