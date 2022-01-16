@@ -45,40 +45,76 @@ namespace KataExercises;
 
 public class Kata_017_TheObservedPin
 {
+    private static readonly Dictionary<string, List<string>> _keypadToVariation = new Dictionary<string, List<string>>
+    {
+        { "0", new List<string> { "0", "8" } },
+        { "1", new List<string> { "1", "2", "4" } },
+        { "2", new List<string> { "2", "1", "3", "5" } },
+        { "3", new List<string> { "3", "2", "6" } },
+        { "4", new List<string> { "4", "1", "5", "7" } },
+        { "5", new List<string> { "5", "2", "4", "6", "8" } },
+        { "6", new List<string> { "6", "3", "5", "9" } },
+        { "7", new List<string> { "7", "4", "8" } },
+        { "8", new List<string> { "8", "5", "7", "9", "0" } },
+        { "9", new List<string> { "9", "6", "8" } }
+    };
+
     public static List<string> GetPINs(string observedPin)
     {
         var variations = new List<string>();
-        var keypadToVariation = new Dictionary<string, List<string>>
-        {
-            { "0", new List<string> { "0", "8" } },
-            { "1", new List<string> { "1", "2", "4" } },
-            { "2", new List<string> { "2", "1", "3", "5" } },
-            { "3", new List<string> { "3", "2", "6" } },
-            { "4", new List<string> { "4", "1", "5", "7" } },
-            { "5", new List<string> { "5", "2", "4", "6", "8" } },
-            { "6", new List<string> { "6", "3", "5", "9" } },
-            { "7", new List<string> { "7", "4", "8" } },
-            { "8", new List<string> { "8", "5", "7", "9", "0" } },
-            { "9", new List<string> { "9", "6", "8" } }
-        };
 
-        var numberOfCombinations = 1;
+        // Calculating number of combinations
+        //var numberOfCombinations = 1;
 
+        //foreach (var digit in observedPin)
+        //{
+        //    numberOfCombinations *= _keypadToVariation[digit.ToString()].Count;
+        //}
+
+        // Contains mappings only for digits that are used in observed pin
+        var pinDigitToVariations = new List<List<string>>();
         foreach (var digit in observedPin)
         {
-            numberOfCombinations *= keypadToVariation[digit.ToString()].Count;
+            pinDigitToVariations.Add(_keypadToVariation[digit.ToString()]);
         }
-        
-        foreach (var digit in observedPin)
+
+        var indexes = new int[observedPin.Length];
+
+        while (true)
         {
-            foreach (var variation in keypadToVariation[digit.ToString()])
+            variations.Add(GetCombinationForIndexes(indexes, pinDigitToVariations));
+
+            int j = indexes.Length - 1;
+
+            while (true)
             {
-
+                indexes[j] += 1;
+                if (indexes[j] < pinDigitToVariations[j].Count)
+                {
+                    break;
+                }
+                indexes[j] = 0;
+                j -= 1;
+                if (j < 0) break;
             }
+
+            if (j < 0) break;
         }
 
-        Console.WriteLine($"Number of combinations for observed PIN: {observedPin} is {numberOfCombinations}");
+        //Console.WriteLine($"Number of combinations for observed PIN: {observedPin} is {numberOfCombinations}");
 
         return variations;
+    }
+
+    private static string GetCombinationForIndexes(int[] indexes, List<List<string>> pinDigitToVariations)
+    {
+        var res = string.Empty;
+
+        for (int i = 0; i < indexes.Length; i++)
+        {
+            res += pinDigitToVariations[i][indexes[i]];
+        }
+
+        return res;
     }
 }

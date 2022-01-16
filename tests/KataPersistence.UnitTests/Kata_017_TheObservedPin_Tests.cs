@@ -16,9 +16,9 @@ public class Kata_017_TheObservedPin_Tests
                 "369",
                 new[]
                 {
-                    "339", "366", "399", "658", "636", "258", "268", "669", "668", "266", "369", "398", "256",
-                    "296", "259", "368", "638", "396", "238", "356", "659", "639", "666", "359", "336", "299",
-                    "338", "696", "269", "358", "656", "698", "699", "298", "236", "239"
+                    "339", "366", "399", "658", "636", "258", "268", "669", "668", "266", "369", "398",
+                    "256", "296", "259", "368", "638", "396", "238", "356", "659", "639", "666", "359",
+                    "336", "299", "338", "696", "269", "358", "656", "698", "699", "298", "236", "239"
                 }
             }
         };
@@ -33,12 +33,40 @@ public class Kata_017_TheObservedPin_Tests
     public void Test2()
     {
         // Arrange
-        var pin = "8";
+        var pin = "2";
 
         // Act
-        var res = Kata_017_TheObservedPin.GetPINs("369");
+        var res = Kata_017_TheObservedPin.GetPINs(pin);
 
         // Assert
-        CollectionAssert.AreEquivalent(pin, res);
+        Assert.AreEqual(4, res.Count);
+        CollectionAssert.AreEquivalent(new[] { "1", "2", "3", "5" }, res);
+    }
+
+    [Test]
+    public void Test01()
+    {
+        // Arrange
+        var pin = "01";
+
+        // Act
+        var res = Kata_017_TheObservedPin.GetPINs(pin);
+
+        // Assert
+        Assert.AreEqual(6, res.Count);
+        CollectionAssert.AreEquivalent(new[] { "01", "02", "04", "81", "82", "84" }, res);
+    }
+
+    [Test]
+    public void Test369()
+    {
+        // Arrange
+        var pin = "369";
+
+        // Act
+        var res = Kata_017_TheObservedPin.GetPINs(pin);
+
+        // Assert
+        Assert.AreEqual(36, res.Count);
     }
 }
