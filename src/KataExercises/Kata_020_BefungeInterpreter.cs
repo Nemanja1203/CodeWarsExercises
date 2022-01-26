@@ -48,6 +48,12 @@ public class Kata_020_BefungeInterpreter
     public string Interpret(string code)
     {
         var rows = code.Split('\n');
+        foreach (var row in rows)
+        {
+            Console.WriteLine(row);
+        }
+
+        var result = string.Empty;
 
         int rowIndex = 0;
         int columnIndex = 0;
@@ -55,138 +61,266 @@ public class Kata_020_BefungeInterpreter
         var currentCommand = rows[rowIndex][columnIndex];
         var stack = new Stack<int>();
 
+        var movingDirection = '>';
+        var isStringMode = false;
+
         // TODO: (nm) Implement moving (changing indexes)
         // and add call moving func for every step
 
         while (currentCommand != '@')
         {
-            switch (currentCommand)
+            if (isStringMode)
             {
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    stack.Push(currentCommand - 0);
-                    Move();
-                    break;
-                case '+':
-                    {
-                        var a = stack.Pop();
-                        var b = stack.Pop();
-                        stack.Push(a + b);
-                        break;
-                    }
-                case '-':
-                    {
-                        var a = stack.Pop();
-                        var b = stack.Pop();
-                        stack.Push(b - a);
-                        break;
-                    }
-                case '*':
-                    {
-                        var a = stack.Pop();
-                        var b = stack.Pop();
-                        stack.Push(a * b);
-                        break;
-                    }
-                case '/':
-                    {
-                        var a = stack.Pop();
-                        var b = stack.Pop();
-
-                        if (a == 0)
-                        {
-                            stack.Push(0);
-                        }
-                        else
-                        {
-                            stack.Push(b / a);
-                        }
-                        break;
-                    }
-                case '%':
-                    {
-                        var a = stack.Pop();
-                        var b = stack.Pop();
-
-                        if (a == 0)
-                        {
-                            stack.Push(0);
-                        }
-                        else
-                        {
-                            stack.Push(b % a);
-                        }
-                        break;
-                    }
-                case '!':
-                    {
-                        var a = stack.Pop();
-                        if (a == 0)
-                        {
-                            stack.Push(1);
-                        }
-                        else
-                        {
-                            stack.Push(0);
-                        }
-                        break;
-                    }
-                case '`':
-                    {
-                        var a = stack.Pop();
-                        var b = stack.Pop();
-
-                        if (b > a)
-                        {
-                            stack.Push(1);
-                        }
-                        else
-                        {
-                            stack.Push(0);
-                        }
-                        break;
-                    }
-                case '>':
-                    {
-                        columnIndex++;
-                        if
-                        break;
-                    }
-                case '<':
-                case '^':
-                case 'v':
-                case '?':
-                case '_':
-                case '|':
-                case '"':
-                case ':':
-                case '\\':
-                case '$':
-                case '.':
-                case ',':
-                case '#':
-                case 'p':
-                case 'g':
-                case ' ':
-                case '@':
-                default:
-                    break;
+                stack.Push((int)currentCommand);
             }
+            else
+            {
+                switch (currentCommand)
+                {
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9': // 0 - 9 Push this number onto the stack.
+                        {
+                            stack.Push(int.Parse(currentCommand.ToString()));
+                            break;
+                        }
+                    case '+': // + Addition: Pop a and b, then push a+b.
+                        {
+                            var a = stack.Pop();
+                            var b = stack.Pop();
+                            stack.Push(a + b);
+                            break;
+                        }
+                    case '-': // - Subtraction: Pop a and b, then push b-a.
+                        {
+                            var a = stack.Pop();
+                            var b = stack.Pop();
+                            stack.Push(b - a);
+                            break;
+                        }
+                    case '*': // * Multiplication: Pop a and b, then push a*b.
+                        {
+                            var a = stack.Pop();
+                            var b = stack.Pop();
+                            stack.Push(a * b);
+                            break;
+                        }
+                    case '/': // / Integer division: Pop a and b, then push b/a, rounded down. If a is zero, push zero.
+                        {
+                            var a = stack.Pop();
+                            var b = stack.Pop();
+
+                            if (a == 0)
+                            {
+                                stack.Push(0);
+                            }
+                            else
+                            {
+                                stack.Push(b / a);
+                            }
+                            break;
+                        }
+                    case '%': // % Modulo: Pop a and b, then push the b%a. If a is zero, push zero.
+                        {
+                            var a = stack.Pop();
+                            var b = stack.Pop();
+
+                            if (a == 0)
+                            {
+                                stack.Push(0);
+                            }
+                            else
+                            {
+                                stack.Push(b % a);
+                            }
+                            break;
+                        }
+                    case '!': // ! Logical NOT: Pop a value. If the value is zero, push 1; otherwise, push zero.
+                        {
+                            var a = stack.Pop();
+                            if (a == 0)
+                            {
+                                stack.Push(1);
+                            }
+                            else
+                            {
+                                stack.Push(0);
+                            }
+                            break;
+                        }
+                    case '`': // ` (backtick) Greater than: Pop a and b, then push 1 if b>a, otherwise push zero.
+                        {                            
+                            var a = stack.Pop();
+                            var b = stack.Pop();
+
+                            if (b > a)
+                            {
+                                stack.Push(1);
+                            }
+                            else
+                            {
+                                stack.Push(0);
+                            }
+                            break;
+                        }
+                    case '>': // > Start moving right.
+                    case '<': // < Start moving left.
+                    case '^': // ^ Start moving up.
+                    case 'v': // v Start moving down.
+                        {
+                            movingDirection = currentCommand;
+                            break;
+                        }
+                    case '?': // ? Start moving in a random cardinal direction.
+                        {
+
+                            break;
+                        }
+                    case '_': // _ Pop a value; move right if value = 0, left otherwise.
+                        {                            
+                            var a = stack.Pop();
+                            movingDirection = a == 0 ? '>' : '<';
+
+                            break;
+                        }
+                    case '|': // | Pop a value; move down if value = 0, up otherwise.
+                        {                            
+                            var a = stack.Pop();
+                            movingDirection = a == 0 ? 'v' : '^';
+                            break;
+                        }
+                    case '"': // Start string mode: push each character's ASCII value all the way up to the next ".
+                        {
+                            stack.Push(currentCommand);
+                            break;
+                        }
+                    case ':': // : Duplicate value on top of the stack. If there is nothing on top of the stack, push a 0.
+                        {
+                            try
+                            {
+                                var a = stack.Peek();
+                                stack.Push(a);
+                            }
+                            finally
+                            {
+                                stack.Push(0);
+                            }
+                            break;
+                        }
+                    case '\\': // \ Swap two values on top of the stack. If there is only one value, pretend there is an extra 0 on
+                        {
+                            var a = stack.Pop();
+                            var b = stack.Pop();
+
+                            stack.Push(a);
+                            stack.Push(b);
+
+                            break;
+                        }
+                    case '$': // $ Pop value from the stack and discard it.
+                        {
+                            var _ = stack.Pop();
+                            break;
+                        }
+                    case '.': // . Pop value and output as an integer.
+                        {
+                            var a = stack.Pop();
+                            result += a;
+                            //Console.WriteLine(a);
+                            break;
+                        }
+                    case ',': // , Pop value and output the ASCII character represented by the integer code that is stored in the value.
+                        {
+                            var a = stack.Pop();
+                            result += (char)a;
+                            //Console.WriteLine((char)a);
+                            break;
+                        }
+                    case '#': // Trampoline: Skip next cell.
+                        {
+                            Move();
+                            break;
+                        }
+                    case 'p': // A "put" call (a way to store a value for later use). Pop y, x and v,
+                              // then change the character at the position (x,y) in the program to the character with ASCII value v.
+                        {
+                            var y = stack.Pop();
+                            var x = stack.Pop();
+                            var v = stack.Pop();
+                            var r = rows[x];
+                            rows[x] = r.Remove(y, 1).Insert(y, ((char)v).ToString());
+
+                            break;
+                        }
+                    case 'g': // g A "get" call (a way to retrieve data in storage). Pop y and x,
+                              // then push ASCII value of the character at that position in the program.
+                        {
+                            var y = stack.Pop();
+                            var x = stack.Pop();
+
+                            var a = rows[x][y];
+                            stack.Push((int)a);
+
+                            break;
+                        }
+                    case ' ':
+                        {
+                            break;
+                        }
+                    case '@': 
+                    default:
+                        break;
+                }
+            }
+
+            Move();
+            currentCommand = rows[rowIndex][columnIndex];
         }
 
         return "";
-    }
 
-    private void Move()
-    {
-        throw new NotImplementedException();
+        void Move()
+        {
+            switch (movingDirection)
+            {
+                case '>':
+                    columnIndex++;
+                    if (columnIndex > rows[rowIndex].Length - 1)
+                    {
+                        columnIndex = 0;
+                    }
+                    break;
+                case '<':
+                    columnIndex--;
+                    if (columnIndex < 0)
+                    {
+                        columnIndex = rows[rowIndex].Length - 1;
+                    }
+                    break;
+                case '^':
+                    rowIndex--;
+                    if (rowIndex < 0)
+                    {
+                        rowIndex = rows.Length - 1;
+                    }
+                    break;
+                case 'v':
+                    rowIndex++;
+                    if (rowIndex > rows.Length - 1)
+                    {
+                        rowIndex = 0;
+                    }
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
     }
 }
