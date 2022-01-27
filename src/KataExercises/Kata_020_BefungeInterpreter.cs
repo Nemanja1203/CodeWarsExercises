@@ -59,7 +59,7 @@ public class Kata_020_BefungeInterpreter
         int columnIndex = 0;
 
         var currentCommand = rows[rowIndex][columnIndex];
-        var stack = new Stack<int>();
+        var stack = new Stack<string>();
 
         var movingDirection = '>';
         var isStringMode = false;
@@ -71,7 +71,14 @@ public class Kata_020_BefungeInterpreter
         {
             if (isStringMode)
             {
-                stack.Push((int)currentCommand);
+                if (currentCommand == '"')
+                {
+                    isStringMode = false;
+                }
+                else
+                {
+                    stack.Push(currentCommand.ToString());
+                }
             }
             else
             {
@@ -88,85 +95,85 @@ public class Kata_020_BefungeInterpreter
                     case '8':
                     case '9': // 0 - 9 Push this number onto the stack.
                         {
-                            stack.Push(int.Parse(currentCommand.ToString()));
+                            stack.Push(currentCommand.ToString());
                             break;
                         }
                     case '+': // + Addition: Pop a and b, then push a+b.
                         {
-                            var a = stack.Pop();
-                            var b = stack.Pop();
-                            stack.Push(a + b);
+                            var a = int.Parse(stack.Pop());
+                            var b = int.Parse(stack.Pop());
+                            stack.Push((a + b).ToString());
                             break;
                         }
                     case '-': // - Subtraction: Pop a and b, then push b-a.
                         {
-                            var a = stack.Pop();
-                            var b = stack.Pop();
-                            stack.Push(b - a);
+                            var a = int.Parse(stack.Pop());
+                            var b = int.Parse(stack.Pop());
+                            stack.Push((b - a).ToString());
                             break;
                         }
                     case '*': // * Multiplication: Pop a and b, then push a*b.
                         {
-                            var a = stack.Pop();
-                            var b = stack.Pop();
-                            stack.Push(a * b);
+                            var a = int.Parse(stack.Pop());
+                            var b = int.Parse(stack.Pop());
+                            stack.Push((a * b).ToString());
                             break;
                         }
                     case '/': // / Integer division: Pop a and b, then push b/a, rounded down. If a is zero, push zero.
                         {
-                            var a = stack.Pop();
-                            var b = stack.Pop();
+                            var a = int.Parse(stack.Pop());
+                            var b = int.Parse(stack.Pop());
 
                             if (a == 0)
                             {
-                                stack.Push(0);
+                                stack.Push(0.ToString());
                             }
                             else
                             {
-                                stack.Push(b / a);
+                                stack.Push((b / a).ToString());
                             }
                             break;
                         }
                     case '%': // % Modulo: Pop a and b, then push the b%a. If a is zero, push zero.
                         {
-                            var a = stack.Pop();
-                            var b = stack.Pop();
+                            var a = int.Parse(stack.Pop());
+                            var b = int.Parse(stack.Pop());
 
                             if (a == 0)
                             {
-                                stack.Push(0);
+                                stack.Push(0.ToString());
                             }
                             else
                             {
-                                stack.Push(b % a);
+                                stack.Push((b % a).ToString());
                             }
                             break;
                         }
                     case '!': // ! Logical NOT: Pop a value. If the value is zero, push 1; otherwise, push zero.
                         {
-                            var a = stack.Pop();
+                            var a = int.Parse(stack.Pop());
                             if (a == 0)
                             {
-                                stack.Push(1);
+                                stack.Push(1.ToString());
                             }
                             else
                             {
-                                stack.Push(0);
+                                stack.Push(0.ToString());
                             }
                             break;
                         }
                     case '`': // ` (backtick) Greater than: Pop a and b, then push 1 if b>a, otherwise push zero.
-                        {                            
-                            var a = stack.Pop();
-                            var b = stack.Pop();
+                        {
+                            var a = int.Parse(stack.Pop());
+                            var b = int.Parse(stack.Pop());
 
                             if (b > a)
                             {
-                                stack.Push(1);
+                                stack.Push(1.ToString());
                             }
                             else
                             {
-                                stack.Push(0);
+                                stack.Push(0.ToString());
                             }
                             break;
                         }
@@ -180,47 +187,54 @@ public class Kata_020_BefungeInterpreter
                         }
                     case '?': // ? Start moving in a random cardinal direction.
                         {
-
                             break;
                         }
                     case '_': // _ Pop a value; move right if value = 0, left otherwise.
-                        {                            
+                        {
                             var a = stack.Pop();
-                            movingDirection = a == 0 ? '>' : '<';
+                            movingDirection = a == "0" ? '>' : '<';
 
                             break;
                         }
                     case '|': // | Pop a value; move down if value = 0, up otherwise.
-                        {                            
+                        {
                             var a = stack.Pop();
-                            movingDirection = a == 0 ? 'v' : '^';
+                            movingDirection = a == "0" ? 'v' : '^';
+
                             break;
                         }
                     case '"': // Start string mode: push each character's ASCII value all the way up to the next ".
                         {
-                            stack.Push(currentCommand);
+                            isStringMode = !isStringMode;
                             break;
                         }
                     case ':': // : Duplicate value on top of the stack. If there is nothing on top of the stack, push a 0.
                         {
-                            try
+                            if (stack.Count > 0)
                             {
                                 var a = stack.Peek();
                                 stack.Push(a);
                             }
-                            finally
+                            else
                             {
-                                stack.Push(0);
+                                stack.Push(0.ToString());
                             }
                             break;
                         }
                     case '\\': // \ Swap two values on top of the stack. If there is only one value, pretend there is an extra 0 on
                         {
-                            var a = stack.Pop();
-                            var b = stack.Pop();
+                            if (stack.Count == 1)
+                            {
+                                stack.Push(0.ToString());
+                            }
+                            else
+                            {
+                                var a = stack.Pop();
+                                var b = stack.Pop();
 
-                            stack.Push(a);
-                            stack.Push(b);
+                                stack.Push(a);
+                                stack.Push(b);
+                            }
 
                             break;
                         }
@@ -233,14 +247,12 @@ public class Kata_020_BefungeInterpreter
                         {
                             var a = stack.Pop();
                             result += a;
-                            //Console.WriteLine(a);
                             break;
                         }
                     case ',': // , Pop value and output the ASCII character represented by the integer code that is stored in the value.
                         {
                             var a = stack.Pop();
-                            result += (char)a;
-                            //Console.WriteLine((char)a);
+                            result += a;
                             break;
                         }
                     case '#': // Trampoline: Skip next cell.
@@ -251,9 +263,9 @@ public class Kata_020_BefungeInterpreter
                     case 'p': // A "put" call (a way to store a value for later use). Pop y, x and v,
                               // then change the character at the position (x,y) in the program to the character with ASCII value v.
                         {
-                            var y = stack.Pop();
-                            var x = stack.Pop();
-                            var v = stack.Pop();
+                            var y = int.Parse(stack.Pop());
+                            var x = int.Parse(stack.Pop());
+                            var v = int.Parse(stack.Pop());
                             var r = rows[x];
                             rows[x] = r.Remove(y, 1).Insert(y, ((char)v).ToString());
 
@@ -262,11 +274,11 @@ public class Kata_020_BefungeInterpreter
                     case 'g': // g A "get" call (a way to retrieve data in storage). Pop y and x,
                               // then push ASCII value of the character at that position in the program.
                         {
-                            var y = stack.Pop();
-                            var x = stack.Pop();
+                            var y = int.Parse(stack.Pop());
+                            var x = int.Parse(stack.Pop());
 
                             var a = rows[x][y];
-                            stack.Push((int)a);
+                            stack.Push(a.ToString());
 
                             break;
                         }
@@ -274,7 +286,7 @@ public class Kata_020_BefungeInterpreter
                         {
                             break;
                         }
-                    case '@': 
+                    case '@':
                     default:
                         break;
                 }
@@ -284,7 +296,7 @@ public class Kata_020_BefungeInterpreter
             currentCommand = rows[rowIndex][columnIndex];
         }
 
-        return "";
+        return result;
 
         void Move()
         {
@@ -323,4 +335,8 @@ public class Kata_020_BefungeInterpreter
             }
         }
     }
+
+    // TODO: (nm)
+    // 1. Figure out what part of code is called the most
+    // 2. Measure execution of all cases
 }
