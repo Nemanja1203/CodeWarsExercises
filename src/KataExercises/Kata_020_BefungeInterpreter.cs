@@ -41,12 +41,15 @@
 
 //"123456789".equals(new BefungeInterpreter().interpret(">987v>.v\nv456<  :\n>321 ^ _@")
 
+
 namespace KataExercises;
 
 public class Kata_020_BefungeInterpreter
 {
     public string Interpret(string code)
     {
+        var rnd = new Random();
+
         var rows = code.Split('\n');
         foreach (var row in rows)
         {
@@ -187,6 +190,22 @@ public class Kata_020_BefungeInterpreter
                         }
                     case '?': // ? Start moving in a random cardinal direction.
                         {
+                            var direction = rnd.Next(3);
+                            switch (direction)
+                            {
+                                case 0:
+                                    movingDirection = '>';
+                                    break;
+                                case 1:
+                                    movingDirection = '<';
+                                    break;
+                                case 2:
+                                    movingDirection = '^';
+                                    break;
+                                default:
+                                    movingDirection = 'v';
+                                    break;
+                            }
                             break;
                         }
                     case '_': // _ Pop a value; move right if value = 0, left otherwise.
@@ -266,8 +285,8 @@ public class Kata_020_BefungeInterpreter
                             var y = int.Parse(stack.Pop());
                             var x = int.Parse(stack.Pop());
                             var v = int.Parse(stack.Pop());
-                            var r = rows[x];
-                            rows[x] = r.Remove(y, 1).Insert(y, ((char)v).ToString());
+                            var r = rows[y];
+                            rows[y] = r.Remove(x, 1).Insert(x, ((char)v).ToString());
 
                             break;
                         }
@@ -277,7 +296,7 @@ public class Kata_020_BefungeInterpreter
                             var y = int.Parse(stack.Pop());
                             var x = int.Parse(stack.Pop());
 
-                            var a = rows[x][y];
+                            var a = rows[y][x];
                             stack.Push(a.ToString());
 
                             break;
@@ -335,8 +354,4 @@ public class Kata_020_BefungeInterpreter
             }
         }
     }
-
-    // TODO: (nm)
-    // 1. Figure out what part of code is called the most
-    // 2. Measure execution of all cases
 }

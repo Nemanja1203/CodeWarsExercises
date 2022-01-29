@@ -22,7 +22,15 @@ public class Kata_020_BefungeInterpreter_Tests
     public void HelloWorld()
     {
         Assert.AreEqual(
+            "Hello World!\n",
+            new Kata_020_BefungeInterpreter().Interpret(">25*\"!dlroW olleH\":v\n                v:,_@\n                >  ^"));
+    }
+
+    [Test]
+    public void Factorial()
+    {
+        Assert.AreEqual(
             "40320",
-            new Kata_020_BefungeInterpreter().Interpret("08>:1-:v v *_$.@ \n  ^ _$>\\:^^_$>\\:^"));
+            new Kata_020_BefungeInterpreter().Interpret("08>:1-:v v *_$.@ \n  ^    _$>\\:^  ^    _$>\\:^"));
     }
 }
