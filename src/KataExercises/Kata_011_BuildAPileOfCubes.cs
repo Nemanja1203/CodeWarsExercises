@@ -27,7 +27,7 @@ public class Kata_011_BuildAPileOfCubes
         long i = 2;
         for (; currentVolume < m; i++)
         {
-            // Casting is expensive as it is in for loop and we do it every time
+            // CHECK: (nm) Casting is expensive as it is in for loop and we do it every time
             currentVolume += (int)Math.Pow(i, 3);
         }
         return currentVolume == m ? i : -1;
